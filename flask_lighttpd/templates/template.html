@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+  <head>
+    <title>flask_lighttpd</title>
+    <meta charset="utf-8">
+    <!-- responsive, change scale based on screen size -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div class="container">
+      {% for message in get_flashed_messages() %}
+        <div class="flash">{{ message }}</div>
+      {% endfor %}
+      {% if error %}
+        <p class="error"><strong>Error:</strong> {{ error }}
+      {% endif %}
+      <!-- inheritance -->
+      {% block content %}
+      {% endblock %}
+      <!-- end inheritance -->
+    </div>
+  </body>
+</html>
