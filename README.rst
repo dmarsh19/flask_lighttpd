@@ -9,11 +9,19 @@ For production:
     install in /var/www
 
 
-chmod 775 flask_lighttpd.fcgi
-chmod 775 runserver.py
+#chmod 775 flask_lighttpd.fcgi
+#chmod 775 runserver.py
+
+# may need to change python path in these files:
+flask_lighttpd.fcgi (2 locations)
+runserver.py
+settings.py (APP_LOGFILE)
 
 
-in /etc/lighttpd/lighttpd.conf, append the following lines:
+# in /etc/lighttpd/lighttpd.conf, add the following line in the server.modules array:
+        "mod_fastcgi",
+
+# and append the following lines at the end (CHANGE username in bin-path):
 #### lighttpd_core ####
 #debug.log-request-header = "enable"
 #debug.log-response-header = "enable"
@@ -30,3 +38,8 @@ fastcgi.server = (
     "max-procs" => 1
   ) )
 )
+
+
+
+sudo service lighttpd restart
+navigate to the url
