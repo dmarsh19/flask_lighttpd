@@ -1,7 +1,5 @@
-##Getting Started
-**Complete 1base.sh install\setup from infrastructure_project.**
-
-**ensure /srv exists under root:root ownership with 755 permissions**
+- **Complete 1base.sh install\setup from infrastructure_project.**
+- **Ensure /srv exists under root:root ownership with 755 permissions**
 
 ```
 cd ~/dev
