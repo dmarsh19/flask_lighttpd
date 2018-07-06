@@ -1,5 +1,10 @@
 #!/bin/bash
 
+PROJECT_NAME="flask_lighttpd"
+URL_EXTENSION="/"
+SRV_DEST=/srv/lighttpd/${PROJECT_NAME}_project
+LIGHTY_CONF=/etc/lighttpd/lighttpd.conf
+
 as_root()
 {
   # Make sure we are root
@@ -12,12 +17,11 @@ as_root()
 
 as_root
 
-# flask, flup6, and dependencies
 python3 -m pip install -r requirements.txt
 
-mkdir -p -m 0755 /srv/lighttpd/flask_lighttpd_project
-cp -r flask_lighttpd flask_lighttpd.fcgi settings.py /srv/lighttpd/flask_lighttpd_project
-chown -R www-data:www-data /srv/lighttpd
+mkdir -m 0755 $SRV_DEST
+cp -r $PROJECT_NAME ${PROJECT_NAME}.fcgi settings.py $SRV_DEST
+chown -R www-data:www-data $SRV_DEST
 
 # if fastcgi successfully enabled, exit code = 0
 # if fastcgi mod already enabled, exit code = 2
@@ -25,17 +29,17 @@ chown -R www-data:www-data /srv/lighttpd
 lighty-enable-mod fastcgi
 if [ $? -eq 0 ]
   then
-    echo "" >> /etc/lighttpd/lighttpd.conf
-    echo "#### mod_fastcgi ####" >> /etc/lighttpd/lighttpd.conf
-    echo "fastcgi.server = (" >> /etc/lighttpd/lighttpd.conf
-    echo '  "/" => ( (' >> /etc/lighttpd/lighttpd.conf
-    echo '    "socket" => "/tmp/flask_lighttpd-fcgi.socket",' >> /etc/lighttpd/lighttpd.conf
-    echo '    "bin-path" => "/srv/lighttpd/flask_lighttpd_project/flask_lighttpd.fcgi",' >> /etc/lighttpd/lighttpd.conf
-    echo '    "check-local" => "disable",' >> /etc/lighttpd/lighttpd.conf
-    echo '    "max-procs" => 1' >> /etc/lighttpd/lighttpd.conf
-    echo '  ) )' >> /etc/lighttpd/lighttpd.conf
-    echo ')' >> /etc/lighttpd/lighttpd.conf
-    echo "" >> /etc/lighttpd/lighttpd.conf
+    echo "" >> $LIGHTY_CONF
+    echo "#### mod_fastcgi ####" >> $LIGHTY_CONF
+    echo "fastcgi.server = (" >> $LIGHTY_CONF
+    echo "  '${URL_EXTENSION}' => ( (" >> $LIGHTY_CONF
+    echo "    'socket' => '/tmp/${PROJECT_NAME}-fcgi.socket'," >> $LIGHTY_CONF
+    echo "    'bin-path' => ${SRV_DEST}/${PROJECT_NAME}.fcgi'," >> $LIGHTY_CONF
+    echo "    'check-local' => 'disable'," >> $LIGHTY_CONF
+    echo "    'max-procs' => 1" >> $LIGHTY_CONF
+    echo "  ) )" >> $LIGHTY_CONF
+    echo ")" >> $LIGHTY_CONF
+    echo "" >> $LIGHTY_CONF
 fi
 
 service lighttpd restart
