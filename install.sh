@@ -1,7 +1,5 @@
 #!/bin/bash
 
-PROJECT_NAME="flask_lighttpd"
-URL_EXTENSION="/"
 SRV_DEST=/srv/lighttpd/${PROJECT_NAME}_project
 LIGHTY_CONF=/etc/lighttpd/lighttpd.conf
 
@@ -14,8 +12,16 @@ as_root()
       exit -1
   fi
 }
-
 as_root
+
+if [ ! $1 ] || [ ! $2 ]
+  then
+    echo "Usage: $0 [PROJECT_NAME] [URL_EXTENSION]"
+    echo 'Example: '$0' "flask_lighttpd" "/"'
+    exit -1
+fi
+PROJECT_NAME=$1
+URL_EXTENSION=$2
 
 python3 -m pip install -r requirements.txt
 
