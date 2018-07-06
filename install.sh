@@ -32,11 +32,11 @@ if [ $? -eq 0 ]
     echo "" >> $LIGHTY_CONF
     echo "#### mod_fastcgi ####" >> $LIGHTY_CONF
     echo "fastcgi.server = (" >> $LIGHTY_CONF
-    echo "  '${URL_EXTENSION}' => ( (" >> $LIGHTY_CONF
-    echo "    'socket' => '/tmp/${PROJECT_NAME}-fcgi.socket'," >> $LIGHTY_CONF
-    echo "    'bin-path' => ${SRV_DEST}/${PROJECT_NAME}.fcgi'," >> $LIGHTY_CONF
-    echo "    'check-local' => 'disable'," >> $LIGHTY_CONF
-    echo "    'max-procs' => 1" >> $LIGHTY_CONF
+    echo '  "'${URL_EXTENSION}'" => ( (' >> $LIGHTY_CONF
+    echo '    "socket" => "'/tmp/${PROJECT_NAME}-fcgi.socket'",' >> $LIGHTY_CONF
+    echo '    "bin-path" => "'${SRV_DEST}/${PROJECT_NAME}.fcgi'",' >> $LIGHTY_CONF
+    echo '    "check-local" => "disable",' >> $LIGHTY_CONF
+    echo '    "max-procs" => 1' >> $LIGHTY_CONF
     echo "  ) )" >> $LIGHTY_CONF
     echo ")" >> $LIGHTY_CONF
     echo "" >> $LIGHTY_CONF
