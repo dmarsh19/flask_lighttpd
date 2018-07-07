@@ -11,3 +11,5 @@ sudo ./install.sh "flask_lighttpd" "/"
 
 From a web browser, visit the appropriate URL.
 
+**If you have already deployed a separate flask project on this machine, subsequent deploys will not write the apporpriate server config in lighttpd.conf.**
+
