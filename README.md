@@ -1,7 +1,7 @@
 - **Complete 1base.sh install\setup from infrastructure_project.**
 
 ```
-cd ~/infrastructure_project
+cd ~/dev/infrastructure_project
 sudo ./9install_webserver.sh lighttpd
 cd ~/dev
 git clone https://github.com/dmarsh19/flask_lighttpd.git flask_lighttpd_project
